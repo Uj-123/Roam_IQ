@@ -13,7 +13,12 @@ from google import genai
 load_dotenv()
 
 api_key = os.getenv("GEMINI_API_KEY")
-
+if not api_key:
+    try:
+        api_key = st.secrets["GEMINI_API_KEY"]
+    except Exception:
+        api_key = None
+        
 if not api_key:
     st.error("GEMINI_API_KEY not found in .env file.")
     st.stop()
